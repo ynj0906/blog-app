@@ -29,7 +29,11 @@ HOSTNAME = gethostname()
 
 if 'DESKTOP' in HOSTNAME:
     from . import local_settings
-    SECRET_KEY = local_settings.SECRET_KEY
+    SECRET_KEY = local_settings.SECRET_KEY#以下Djangoシークレットキーの設定
+    NAME = local_settings.NAME#以下MySqlの設定
+    USER = local_settings.USER
+    PASSWORD = local_settings.PASSWORD
+    HOST = local_settings.HOST
 else:
     SECRET_KEY = environ['Django_SECRET_KEY']
 
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contents.apps.ContentsConfig',#追加
+
 
 ]
 
@@ -87,10 +92,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': '3306',
+        'ATOMIC_REQUESTS': True,
+        'OPTIONS':{
+            'sql_mode': 'TRADITIONAL,NO_AUTO_VALUE_ON_ZERO',
+        }
     }
 }
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation

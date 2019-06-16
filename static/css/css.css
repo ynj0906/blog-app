@@ -69,8 +69,57 @@ border: solid 3px #006400;
 #main{
 border: solid 3px #000000;
 position:absolute;
-width:80%;
+width:60%;
 }
+
+.article{
+  background: #fffcf4;
+
+  box-shadow :0px 0px 5px silver;/*5px=影の広がり具合*/
+border: solid 5px #ff8c00;
+  margin-bottom:10px;
+}
+
+.article_title{
+background-color:#696969;
+font-size:30px;
+font-weight :bold;
+color:#b0c4de;
+}
+
+
+.badge{
+display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    color: #fff;
+    background-color: #343a40;
+
+}
+
+
+
+
+div.lis{
+border: solid 3px #000000;
+ margin-bottom:10px;
+}
+
+
+a{
+color:#fff;
+
+}
+
+
+
+
 
 #sidebar{
 border: solid 3px #ff0000;
@@ -78,3 +127,5 @@ position:absolute;
 right:0;
 width:20%;
 }
+
+

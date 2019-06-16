@@ -1,0 +1,13 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block content %}
+<div id="container">
+    {% for detail in article_list %}
+    <div class="lis">
+        <ul><a href="{%url 'contents:detail' detail.pk%}">{{detail.created_at}}</a></ul>
+        <ul>{{detail.title}}</ul>
+    </div>
+    {% endfor %}
+</div>
+
+{%endblock%}

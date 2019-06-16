@@ -12,7 +12,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = ('title','text','tag', 'photo')
+        fields = ('title','text','tag',)
         widgets = {
                     'text': forms.Textarea(attrs={'rows':4}),
 

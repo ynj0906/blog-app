@@ -1,0 +1,12 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block content %}
+
+<div>
+
+<form method="post">
+    <button class="btn btn-danger">{{article}}を削除する</button>
+    {% csrf_token %}
+</form>
+</div>
+{% endblock %}
