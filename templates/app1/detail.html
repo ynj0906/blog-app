@@ -11,12 +11,11 @@
 </div>
 
 <a href="{%url 'contents:main' %}">戻る</a>
+
+{% if perms.auth.add_user %}
 <a href="{%url 'contents:update'　article.pk%}">編集</a>
-
-
-
 <a href="{% url 'contents:delete' article.pk %}">削除</a>
-
+{% endif %}
 
 
 

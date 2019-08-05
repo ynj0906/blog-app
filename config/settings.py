@@ -34,11 +34,15 @@ if 'DESKTOP' in HOSTNAME:
     USER = local_settings.USER
     PASSWORD = local_settings.PASSWORD
     HOST = local_settings.HOST
+    # DEBUG = True
 else:
     SECRET_KEY = environ['Django_SECRET_KEY']
+    DEBUG = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
+"""DEBUGの設定は移動"""
 DEBUG = True
+
 
 ALLOWED_HOSTS = ["*"]#追加、本来は許可するホストを指定スべき
 
@@ -52,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contents.apps.ContentsConfig',#追加
+
 
 
 ]
@@ -79,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'contents.context_processors.common',#追加
             ],
         },
     },
@@ -93,14 +99,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': NAME,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
+        'NAME': NAME,#移動
+        'USER': USER,#移動
+        'PASSWORD': PASSWORD,#移動
+        'HOST': HOST,#移動
         'PORT': '3306',
         'ATOMIC_REQUESTS': True,
-        'OPTIONS':{
+        'OPTIONS': {
+            'charset': 'utf8mb4',
             'sql_mode': 'TRADITIONAL,NO_AUTO_VALUE_ON_ZERO',
+
         }
     }
 }
@@ -151,3 +159,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]#追加
+
+#追加
+# if DEBUG:
+#     def show_toolbar(request):
+#         return True
+# INSTALLED_APPS += (
+#     'debug_toolbar',
+# )
+# MIDDLEWARE += (
+#     'debug_toolbar.middleware.DebugToolbarMiddleware',)
+# DEBUG_TOOLBAR_CONFIG = {
+#     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+# }
+
+LOGIN_REDIRECT_URL = "/contents/main"
+LOGOUT_REDIRECT_URL = "/contents/main"
+

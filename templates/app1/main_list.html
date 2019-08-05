@@ -5,14 +5,23 @@
     <header>
         <div id="header_title">
             <li>タイトルヘッダ</li>
-            <li>c</li>
+            <li><a href="{%url 'contents:logout'%}">ログアウト</a></li>
+            <li><a href="{%url 'contents:login'%}">ログイン</a></li>
             <li>
                 <form id="form1" action="">
                     <input id="sbox" id="s" name="keyword" type="text" placeholder="キーワードを入力"/>
                     <input id="sbtn" type="submit" value="検索"/>
                 </form>
             </li>
+            {% if perms.auth.add_user %}
             <li><a href="{% url 'contents:create' %}">新規作成</a></li>
+            {% endif %}
+
+            {%if user.is_authenticated%}
+            <li>{{user.get_username}}</li>
+            {%else%}
+            <li>ログインしてない侍</li>
+            {%endif%}
 
 
         </div>
@@ -21,226 +30,79 @@
             <!--<img class="header_img" src="{% static 'photo/header_image3.jpg' %}"/>-->
         </div>
 
-        <h1><a href="{% url 'contents:main' %}"> ブログタイトル</a>
+        <h1><a href="{% url 'contents:main' %}"> ブログタイトル</a></h1>
+        <p>今ログインしているユーザーは、
+            記事の
+            参照権：{{ perms.contents.view_article }}
+            登録権：{{ perms.contents.add_article }}
+            があります
+            タグの
+            参照権：{{ perms.contents.view_tag }}
+            登録権：{{ perms.contents.delete_article }}
+            があります
+        </p>
 
-        </h1>
     </header>
 
     <div class="main_wrap">
 
 
         <div id="main">
+            {% if search_keyword %}
             <div id="search_result">
-
-                検索結果：{{ search_keyword}}
+                検索結果：{{ search_keyword }}
             </div>
+            {% else %}
+            {% endif %}
 
+            <!--記事本文-->
             {% for detail in article_list %}
             <div class="article">
-                <div class="article_title">
-                    <a href="{% url 'contents:detail' detail.pk %}">
-                        {{ detail.title | linebreaks }}
-                    </a>
+                <div class="article_img">
+                    <img class="title_img" src="{% static 'photo/gazo2.png' %}"/>
+                </div>
 
-                </div>
-                <div class="article_text">
-                    {{　detail.text | linebreaks }}
-                    {% for tag in detail.tag.all %}
-                    <span class="badge ">
-                    <a href="{% url 'contents:tagview' tag.pk %}">{{ tag}}</a>
+                <div class="article_main">
+                    <div class="article_title">
+                        <a href="{% url 'contents:detail' detail.pk %}">
+                            {{ detail.title | linebreaks }}
+                        </a>
+                    </div>
+
+                    <div class="article_text">
+                        {{　detail.text | linebreaks }}
+                        <!--{% for tag in detail.tag.all %}-->
+                        <!--{% endfor %}-->
+                    </div>
+
+                    <div class="article_end">
+                        {% for tag in detail.tag.all %}
+                        <span class="tag ">
+                        <a href="{% url 'contents:tagview' tag.pk %}">{{ tag}}</a>
                     </span>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
+
             </div>
             {%endfor%}
-
+            <!--ページネーション部分-->
             {% include "./pagination.html" %}
         </div>
 
 
         <div id="sidebar">
-            <div>
-                *** サイドバー部分 ***
+            <div class="side_category">
+                タグ一覧
+                {% for tag in tags.all %}
+                <a href="{%url 'contents:tagview' tag.pk%}">
+                    {{ tag.name }}({{tag.num_tags}})
+                </a>
 
+
+                {%endfor%}
             </div>
 
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            <div>
-                *** サイドバー部分 ***
-
-            </div>
-            vvv
         </div>
 
 

@@ -29,6 +29,7 @@ class Article(models.Model):
     tag = models.ManyToManyField(
         Tag,
         verbose_name="たぐ",
+
         blank=True)
 
     created_at = models.DateTimeField(

@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
 {%block content%}
-
- <a href="{% url 'contents:tagcreate' %}">タグ追加</a>
+{% if perms.auth.add_user %}
+<a href="{% url 'contents:tagcreate' %}">タグ追加</a>
 <form action="" method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
- <button type="submit">送信</button>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">送信</button>
+    {% endif %}
 
 
-<a href="{%url 'contents:main' %}">戻る</a>
+    <a href="{%url 'contents:main' %}">戻る</a>
 </form>
 {%endblock%}
