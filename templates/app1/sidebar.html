@@ -1,0 +1,17 @@
+{% load side_archive_category %}
+<div id="sidebar">
+        <div class="side_category">
+            タグ一覧
+            <ul>
+                {% for tag in tags.all %}
+                <a href="{%url 'contents:tagview' tag.pk%}">
+                    <li> {{ tag.name }}({{tag.num_tags}})</li>
+                </a>
+                {%endfor%}
+            </ul>
+        </div>
+        <div class="side_datecategory">
+            月別アーカイブ
+            {% render_month_links %}
+        </div>
+    </div>

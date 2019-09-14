@@ -1,0 +1,13 @@
+{% extends '../base.html' %}
+
+{% block content %}
+<h1>{{ month | date:"Y年m月"}}の全ての記事</h1>
+
+{% for detail in object_list %}
+ <a href="{% url 'contents:detail' detail.pk %}">
+  <p>{{ detail.created_at | date }} / {{ detail.title }}</p>
+</a>
+{% endfor %}
+<hr>
+<a href="{%url 'contents:main' %}">戻る</a>
+{% endblock %}

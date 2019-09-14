@@ -56,8 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contents.apps.ContentsConfig',#追加
-
-
+    'django.forms',
+    'markdownx',
 
 ]
 
@@ -157,8 +157,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+
+#css/js/画像の配信用に追加
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]#追加
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+#ログイン/ログアウト時のリダイレクト用に追加
+LOGIN_REDIRECT_URL = "/contents/main"
+LOGOUT_REDIRECT_URL = "/contents/main"
+
+#画像のアップロード用に追加
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #追加
 # if DEBUG:
@@ -173,6 +183,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]#追加
 #     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
 # }
 
-LOGIN_REDIRECT_URL = "/contents/main"
-LOGOUT_REDIRECT_URL = "/contents/main"
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.toc',
+]

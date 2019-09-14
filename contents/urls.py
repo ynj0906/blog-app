@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.views.generic.dates import ArchiveIndexView
 
 app_name = "contents"
 urlpatterns =[
@@ -13,7 +14,7 @@ urlpatterns =[
     path('tag/<int:pk>', views.TagView.as_view(), name='tagview'),#name='tagview'は、main_list.htmlの{% url 'contents:tagview' tag.pk %}">と対応
     path("login", views.LoginView.as_view(), name="login"),
     path("logout", views.LogoutView.as_view(), name="logout"),
-
+    path('<int:year>/<int:month>/', views.ArticleMonthArchive.as_view(), name='article_month_archive'),
 
 
 ]

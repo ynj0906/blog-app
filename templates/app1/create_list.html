@@ -1,15 +1,22 @@
 {% extends "base.html" %}
+{%load static%}
 
 {%block content%}
 {% if perms.auth.add_user %}
 <a href="{% url 'contents:tagcreate' %}">タグ追加</a>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">送信</button>
-    {% endif %}
+<div class="editor">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div class="edit_content">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% endif %}
+        </div>
 
 
-    <a href="{%url 'contents:main' %}">戻る</a>
-</form>
+    </form>
+    {{ form.media }}
+</div>
+
+
+
 {%endblock%}

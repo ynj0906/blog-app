@@ -1,22 +1,29 @@
 {% extends "../base.html" %}
 {% load static %}
+{% load markdown %}
+{% load remove_white_space %}
+{% load side_archive_category %}
+
+
 {% block content %}
 <div id="container">
+
     <header>
         <div id="header_title">
             <li>タイトルヘッダ</li>
+            {% if perms.auth.add_user %}
             <li><a href="{%url 'contents:logout'%}">ログアウト</a></li>
+            <li><a href="{% url 'contents:create' %}">新規作成</a></li>
+            {%else%}
             <li><a href="{%url 'contents:login'%}">ログイン</a></li>
+            {%endif%}
             <li>
                 <form id="form1" action="">
-                    <input id="sbox" id="s" name="keyword" type="text" placeholder="キーワードを入力"/>
-                    <input id="sbtn" type="submit" value="検索"/>
+                    <input id="sbox" name="keyword" type="text" placeholder="キーワードを入力"/>
+                    <input id="a" name="検索" , type="submit"/>
+                    <!--<input id="sbtn" type="submit" value="検索"/>-->
                 </form>
             </li>
-            {% if perms.auth.add_user %}
-            <li><a href="{% url 'contents:create' %}">新規作成</a></li>
-            {% endif %}
-
             {%if user.is_authenticated%}
             <li>{{user.get_username}}</li>
             {%else%}
@@ -30,21 +37,21 @@
             <!--<img class="header_img" src="{% static 'photo/header_image3.jpg' %}"/>-->
         </div>
 
-        <h1><a href="{% url 'contents:main' %}"> ブログタイトル</a></h1>
-        <p>今ログインしているユーザーは、
-            記事の
-            参照権：{{ perms.contents.view_article }}
-            登録権：{{ perms.contents.add_article }}
-            があります
-            タグの
-            参照権：{{ perms.contents.view_tag }}
-            登録権：{{ perms.contents.delete_article }}
-            があります
-        </p>
+        <h1><a href="{% url 'contents:main' %}"> ただのブログ</a></h1>
+        <!--<p>今ログインしているユーザーは、-->
+        <!--記事の-->
+        <!--参照権：{{ perms.contents.view_article }}-->
+        <!--登録権：{{ perms.contents.add_article }}-->
+        <!--があります-->
+        <!--タグの-->
+        <!--参照権：{{ perms.contents.view_tag }}-->
+        <!--登録権：{{ perms.contents.delete_article }}-->
+        <!--があります-->
+        <!--</p>-->
 
     </header>
 
-    <div class="main_wrap">
+    <div id="main_wrap">
 
 
         <div id="main">
@@ -59,7 +66,12 @@
             {% for detail in article_list %}
             <div class="article">
                 <div class="article_img">
+                    <!--投稿画像があったら表示、なかったら固定画像-->
+                    {% if detail.photo %}
+                    <img class="title_img" src="{{ detail.photo.url }}"/>
+                    {% else %}
                     <img class="title_img" src="{% static 'photo/gazo2.png' %}"/>
+                    {%endif%}
                 </div>
 
                 <div class="article_main">
@@ -70,43 +82,32 @@
                     </div>
 
                     <div class="article_text">
-                        {{　detail.text | linebreaks }}
-                        <!--{% for tag in detail.tag.all %}-->
-                        <!--{% endfor %}-->
+                        {% spaceless %}
+                        {{ detail.text | markdown_to_html | striptags | xxx }}
+                        {% endspaceless %}
                     </div>
 
                     <div class="article_end">
                         {% for tag in detail.tag.all %}
                         <span class="tag ">
                         <a href="{% url 'contents:tagview' tag.pk %}">{{ tag}}</a>
-                    </span>
+                        </span>
                         {% endfor %}
+                        <span class="published entry-meta_items">{{detail.created_at |date}}</span>
                     </div>
                 </div>
-
-            </div>
+                       </div>
             {%endfor%}
             <!--ページネーション部分-->
             {% include "./pagination.html" %}
         </div>
-
-
-        <div id="sidebar">
-            <div class="side_category">
-                タグ一覧
-                {% for tag in tags.all %}
-                <a href="{%url 'contents:tagview' tag.pk%}">
-                    {{ tag.name }}({{tag.num_tags}})
-                </a>
-
-
-                {%endfor%}
-            </div>
-
-        </div>
-
-
+        {%include "./sidebar.html"%}
     </div>
+
+    <footer>
+        <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>
+        <a href="#">トップへ</a>
+    </footer>
 
 </div>
 

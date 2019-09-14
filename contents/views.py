@@ -9,6 +9,8 @@ from .models import Article, Tag
 from .forms import ArticleForm, TagForm,LoginForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.views import (LoginView, LogoutView)
+from django.views.generic.dates import ArchiveIndexView,MonthArchiveView
+
 
 # Create your views here.
 class Hello(View):
@@ -58,6 +60,7 @@ def paginate_queryset(request, queryset, count):
 
 class Main(ListView, PermissionRequiredMixin):
     model = Article
+    queryset=Article.objects.all().order_by("-created_at")#表示を新しい順に
     template_name = "app1/main_list.html"
     permission_required = ("contents.view_article", "contents.view_tag")
     print("実行されてる～？")
@@ -67,25 +70,26 @@ class Main(ListView, PermissionRequiredMixin):
     def get_context_data(self,**kwargs):#検索時のメソッド
         self.paginate_by = 1
         context = super(ListView, self).get_context_data(**kwargs)
-        print(11)
+        print(1)
 
         if self.request.GET.get('keyword') is not None:  # アクセスしたURLにパラーメターがあれば分岐
             search_keyword = self.request.GET.get('keyword')
             context['search_keyword'] = search_keyword
-            article_list = Article.objects.filter(text__contains=search_keyword)
-            paginator = Paginator(article_list, 6)
-            page_obj = paginate_queryset(self.request, article_list, 3)
+            article_list = Article.objects.filter(text__contains=search_keyword).order_by("-created_at")
+            # paginator = Paginator(article_list, 6)
+            page_obj = paginate_queryset(self.request, article_list, 3)#別に登録したpaginate_queryset関数を使ってる
             context["article_list"] = page_obj.object_list  # フィルタした結果を辞書型としてcontextに追加
             context["page_obj"] = page_obj
-            print(context)
+            print(page_obj)
             return context
         else:
-            self.paginate_by = 5
+            self.paginate_by = 6
             print(2)
             context=super(ListView, self).get_context_data(**kwargs)
 
             print(context)
             print("=========================================================")
+            print()
             return context
 
             # return Article.objects.all()#パラメータがなければ全件取得
@@ -119,7 +123,7 @@ create = Create.as_view()
 
 class Detail(DetailView,PermissionRequiredMixin):
     model = Article
-    template_name = "app1/detail.html"
+    template_name = "app1/detail_list.html"
     permission_required = ("contents.add_article", "contents.add_tag")
 
 
@@ -169,3 +173,11 @@ class TagView(ListView,PermissionRequiredMixin):
 
 
 tagview = TagView.as_view()
+
+
+class ArticleMonthArchive(MonthArchiveView):
+    model = Article
+    template_name = "app1/article_archive.html"
+    date_field = 'created_at'
+    make_object_list = True
+    month_format='%m'

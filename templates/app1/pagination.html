@@ -1,36 +1,46 @@
 {% load item_extras %}
 
 <nav aria-label="ページネーション">
-	<ul class="pagination">
+    <ul class="pagination">
 
-		{% if page_obj.has_previous %}
-			<li class="page-item">
-				<a class="page-link" href="?{%url_replace request 'page' page_obj.previous_page_number %}" aria-label="前へ">
+        {% if page_obj.has_previous %}
+        <li>
+            <a class="page-link" href="?{%url_replace request 'page' 1 %}" aria-label="最初へ">
+            <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
 
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-		{% endif %}
+        <li class="page-item">
+            <a class="page-link" href="?{%url_replace request 'page' page_obj.previous_page_number %}" aria-label="前へ">
+                <span aria-hidden="true"> < </span>
+            </a>
+        </li>
+        {% endif %}
 
-		{% for page_num in page_obj.paginator.page_range %} 
-			{% if page_num == page_obj.number %}
-				<li class="page-item active">
-					<a class="page-link" href="?{%url_replace request 'page' page_num %}">{{ page_num }}</a>
-				</li>
-			{% else %}
-				<li class="page-item">
-					<a class="page-link" href="?{%url_replace request 'page' page_num %}">{{ page_num }}</a>
-				</li>
-			{% endif %}
-		{% endfor %}
+        {% for page_num in page_obj.paginator.page_range %}
+        {% if page_num == page_obj.number %}
+        <li class="page-item active">
+            <a class="page-link" href="?{%url_replace request 'page' page_num %}">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?{%url_replace request 'page' page_num %}">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
 
-		{% if page_obj.has_next %}
-			<li class="page-item">
-				<a class="page-link" href="?{%url_replace request 'page' page_obj.next_page_number %}" aria-label="次へ">
-					<span aria-hidden="true">&raquo;</span>
-				</a>
-			</li>
-		{% endif %}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?{%url_replace request 'page' page_obj.next_page_number %}" aria-label="次へ">
+                <span aria-hidden="true"> > </span>
+            </a>
+        </li>
 
-	</ul>
+        <li>
+            <a class="page-link" href="?{%url_replace request 'page' 'last'　%}" aria-label="最後へ">
+                <span aria-hidden="true">>></span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
 </nav>
