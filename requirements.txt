@@ -1,0 +1,9 @@
+Django==2.2.2
+django-debug-toolbar==1.11
+django-markdownx==2.0.28
+Markdown==3.1.1
+mysqlclient==1.4.2.post1
+Pillow==6.1.0
+python-dotenv==0.10.3
+pytz==2019.1
+sqlparse==0.3.0
