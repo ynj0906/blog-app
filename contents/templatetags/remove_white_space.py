@@ -5,5 +5,5 @@ register = template.Library()
 
 @register.filter
 @stringfilter
-def xxx(value):
+def remove_white_space(value):
     return value.strip()

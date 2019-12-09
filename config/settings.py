@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,32 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#localsettings.pyに移動
+# 以下Djangoシークレットキーの設定
+SECRET_KEY = os.getenv('SECRET_KEY', None)
 
-#環境変数を別ファイルに分けるために追加
-from socket import gethostname
-from os import environ
-HOSTNAME = gethostname()
 
-if 'DESKTOP' in HOSTNAME:
-    from . import local_settings
-    SECRET_KEY = local_settings.SECRET_KEY#以下Djangoシークレットキーの設定
-    NAME = local_settings.NAME#以下MySqlの設定
-    USER = local_settings.USER
-    PASSWORD = local_settings.PASSWORD
-    HOST = local_settings.HOST
-    # DEBUG = True
-else:
-    SECRET_KEY = environ['Django_SECRET_KEY']
-    DEBUG = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
-"""DEBUGの設定は移動"""
-DEBUG = True
+DEBUG = False
 
 
-ALLOWED_HOSTS = ["*"]#追加、本来は許可するホストを指定スべき
-
+ALLOWED_HOSTS = ["yastoon.com"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contents.apps.ContentsConfig',#追加
-    'django.forms',
-    'markdownx',
+    'django.forms',#追加
+    'markdownx',#追加
 
 ]
 
@@ -95,18 +81,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+  # 以下MySqlの設定
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': NAME,#移動
-        'USER': USER,#移動
-        'PASSWORD': PASSWORD,#移動
-        'HOST': HOST,#移動
+        'NAME': os.getenv('NAME', None),
+        'USER': os.getenv('USER', None),
+        'PASSWORD': os.getenv('PASSWORD', None),
+        'HOST': os.getenv('HOST', None),
         'PORT': '3306',
         'ATOMIC_REQUESTS': True,
         'OPTIONS': {
-            'charset': 'utf8mb4',
+            'charset': 'utf8',
             'sql_mode': 'TRADITIONAL,NO_AUTO_VALUE_ON_ZERO',
 
         }

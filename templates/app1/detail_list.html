@@ -7,31 +7,36 @@
 
 <div class="detail_wrap">
     <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
+        <li><a href="{%url 'contents:main' %}">Home</a></li>
         <li><a href="">/ {{ article.title }}</a></li>
     </ol>
-    <div class="detail_main_wrap">
+    <!--<div class="detail_main_wrap">-->
         <div class="detail_main">
             <div class="detail_title">
                 <font size="7">{{article.title }}</font>
-               <br> {{article.created_at | date}}
+                <br> {{article.created_at | date}}
             </div>
             {{ article.text | markdown_to_html | linebreaks }}
         </div>
 
-        {%include "./sidebar.html"%}
+        <!--{%include "./sidebar.html"%}-->
 
-        </div>
-    </div>
+    <!--</div>-->
+</div>
 </div>
 
-<div class="detail_end">
-    <a href="{%url 'contents:main' %}">戻る</a>
-    {% if perms.auth.add_user %}
-    <a href="{%url 'contents:update'　article.pk%}">編集</a>
-    <a href="{% url 'contents:delete' article.pk %}">削除</a>
-    {% endif %}
-</div>
+<footer>
+        <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>
+        <a href="#">トップへ</a>
+    </footer>
+
+<!--<div class="detail_end">-->
+    <!--<a href="{%url 'contents:main' %}">戻る</a>-->
+    <!--{% if perms.auth.add_user %}-->
+    <!--<a href="{%url 'contents:update'　article.pk%}">編集</a>-->
+    <!--<a href="{% url 'contents:delete' article.pk %}">削除</a>-->
+    <!--{% endif %}-->
+<!--</div>-->
 
 
 {%endblock%}

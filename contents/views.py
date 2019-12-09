@@ -162,6 +162,7 @@ tagcreate = TagCreate.as_view()
 
 
 class TagView(ListView,PermissionRequiredMixin):
+    paginate_by = 3
     model = Article
     form_class = TagForm
     permission_required = ("contents.add_article", "contents.add_tag")
@@ -169,6 +170,7 @@ class TagView(ListView,PermissionRequiredMixin):
 
     def get_queryset(self):
         queryset = Article.objects.all().filter(tag__pk=self.kwargs['pk'])
+        print(queryset)
         return queryset
 
 

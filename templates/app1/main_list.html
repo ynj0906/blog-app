@@ -83,7 +83,7 @@
 
                     <div class="article_text">
                         {% spaceless %}
-                        {{ detail.text | markdown_to_html | striptags | xxx }}
+                        {{ detail.text | markdown_to_html | striptags | remove_white_space }}
                         {% endspaceless %}
                     </div>
 
@@ -96,13 +96,19 @@
                         <span class="published entry-meta_items">{{detail.created_at |date}}</span>
                     </div>
                 </div>
-                       </div>
+            </div>
+
             {%endfor%}
+             <div class="page">
             <!--ページネーション部分-->
             {% include "./pagination.html" %}
         </div>
+
+        </div>
+
         {%include "./sidebar.html"%}
     </div>
+
 
     <footer>
         <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>

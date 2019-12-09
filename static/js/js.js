@@ -24,16 +24,16 @@
 //
 //
 
-//メインメニューのコンテンツ部分の高さを確保、+100はヘッダーとコンテンツの間に空けている余白部分
-$(function(){
-    var biggestHeight = "0";
-    $("#main_wrap *").each(function(){
-        if ($(this).height() > biggestHeight ) {
-            biggestHeight = $(this).height()
-        }
-    });
-    $("#main_wrap").height(biggestHeight+100);
-})
+////メインメニューのコンテンツ部分の高さを確保、+100はヘッダーとコンテンツの間に空けている余白部分
+//$(function(){
+//    var biggestHeight = "0";
+//    $("#main_wrap *").each(function(){
+//        if ($(this).height() > biggestHeight ) {
+//            biggestHeight = $(this).height()
+//        }
+//    });
+//    $("#main_wrap").height(biggestHeight+100);
+//})
 
 //positionのabsolute指定で親要素の高さが潰れてしまったときの対処法。
 $(function(){
