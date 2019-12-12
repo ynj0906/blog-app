@@ -157,7 +157,7 @@ LOGOUT_REDIRECT_URL = "/contents/main"
 
 #画像のアップロード用に追加
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/var/www/{}/media'.format(PROJECT_NAME)
 
 #追加
 # if DEBUG:
