@@ -70,7 +70,6 @@ class Main(ListView, PermissionRequiredMixin):
     def get_context_data(self,**kwargs):#検索時のメソッド
         self.paginate_by = 1
         context = super(ListView, self).get_context_data(**kwargs)
-        print(1)
 
         if self.request.GET.get('keyword') is not None:  # アクセスしたURLにパラーメターがあれば分岐
             search_keyword = self.request.GET.get('keyword')
@@ -80,16 +79,10 @@ class Main(ListView, PermissionRequiredMixin):
             page_obj = paginate_queryset(self.request, article_list, 3)#別に登録したpaginate_queryset関数を使ってる
             context["article_list"] = page_obj.object_list  # フィルタした結果を辞書型としてcontextに追加
             context["page_obj"] = page_obj
-            print(page_obj)
             return context
         else:
             self.paginate_by = 6
-            print(2)
-            context=super(ListView, self).get_context_data(**kwargs)
-
-            print(context)
-            print("=========================================================")
-            print()
+            context = super(ListView, self).get_context_data(**kwargs)
             return context
 
             # return Article.objects.all()#パラメータがなければ全件取得
@@ -170,10 +163,7 @@ class TagView(ListView,PermissionRequiredMixin):
 
     def get_queryset(self):
         queryset = Article.objects.all().filter(tag__pk=self.kwargs['pk'])
-        print(queryset)
         return queryset
-
-
 tagview = TagView.as_view()
 
 
