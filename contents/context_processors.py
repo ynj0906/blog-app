@@ -15,10 +15,6 @@ def common(request):
     tag = Tag.objects.annotate(num_tags=Count('article'))
     # dates = Article.objects.annotate(num_date=TruncDate('created_at'))
 
-
-
-
-
     context = {
         "tags":tag,
         # "datess":dates,

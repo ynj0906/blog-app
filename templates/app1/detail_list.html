@@ -18,25 +18,25 @@
             </div>
             {{ article.text | markdown_to_html | linebreaks }}
         </div>
-
         <!--{%include "./sidebar.html"%}-->
 
     <!--</div>-->
 </div>
+
+<div class="detail_end">
+    <a href="{%url 'contents:main' %}">戻る</a>
+    {% if perms.auth.add_user %}
+    <a href="{%url 'contents:update'　article.pk%}">編集</a>
+    <a href="{% url 'contents:delete' article.pk %}">削除</a>
+    {% endif %}
 </div>
+
 
 <footer>
         <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>
         <a href="#">トップへ</a>
     </footer>
 
-<!--<div class="detail_end">-->
-    <!--<a href="{%url 'contents:main' %}">戻る</a>-->
-    <!--{% if perms.auth.add_user %}-->
-    <!--<a href="{%url 'contents:update'　article.pk%}">編集</a>-->
-    <!--<a href="{% url 'contents:delete' article.pk %}">削除</a>-->
-    <!--{% endif %}-->
-<!--</div>-->
 
 
 {%endblock%}

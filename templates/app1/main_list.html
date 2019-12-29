@@ -3,6 +3,7 @@
 {% load markdown %}
 {% load remove_white_space %}
 {% load side_archive_category %}
+{% load count_montharchive %}
 
 
 {% block content %}
@@ -20,7 +21,7 @@
             <li>
                 <form id="form1" action="">
                     <input id="sbox" name="keyword" type="text" placeholder="キーワードを入力"/>
-                    <input id="a" name="検索" , type="submit"/>
+                    <!--<input id="a" name="検索" , type="submit"/>-->
                     <!--<input id="sbtn" type="submit" value="検索"/>-->
                 </form>
             </li>
@@ -37,7 +38,7 @@
             <!--<img class="header_img" src="{% static 'photo/header_image3.jpg' %}"/>-->
         </div>
 
-        <h1><a href="{% url 'contents:main' %}"> ただのブログ</a></h1>
+        <h1><a href="{% url 'contents:main' %}"> そんじょそこらにあるブログ</a></h1>
         <!--<p>今ログインしているユーザーは、-->
         <!--記事の-->
         <!--参照権：{{ perms.contents.view_article }}-->
@@ -111,7 +112,7 @@
 
 
     <footer>
-        <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>
+        <p>Copyright © <span>そんじょそこらにあるブログ </span>All Rights Reserved.</p>
         <a href="#">トップへ</a>
     </footer>
 

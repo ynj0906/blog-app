@@ -1,14 +1,18 @@
+{% load count_montharchive %}
 {% regroup dates by month as dates_by_year %}
 
-
 <ul>
-    {% for year in dates_by_year %}
-    {% for d in year.list %}
+    {% for month in dates_by_year %}
+    {% for d in month.list %}
     <a href="{% url 'contents:article_month_archive' d.year d.month %}">
-        <li>{{ d | date:" Y年m月" }}</li>
+
+        <li>{{ d | date:" Y年m月" }} ( {{ d | date:"m" | article_count }} )</li>
+
+
     </a>
     {% endfor %}
 
 
     {% endfor %}
+
 </ul>
