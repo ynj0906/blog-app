@@ -31,15 +31,13 @@ class Article(models.Model):
     tag = models.ManyToManyField(
         Tag,
         verbose_name="たぐ",
-
         blank=True)
 
     photo = models.ImageField(
         verbose_name="フォト",
         blank=True,
         null=True,
-        upload_to="photo/%Y%m%d",
-    )
+        upload_to="photo/%Y%m%d",)
 
     created_at = models.DateTimeField(
         verbose_name='登録日',

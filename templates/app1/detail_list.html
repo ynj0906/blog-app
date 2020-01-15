@@ -11,33 +11,48 @@
         <li><a href="">/ {{ article.title }}</a></li>
     </ol>
     <!--<div class="detail_main_wrap">-->
-        <div class="detail_main">
-            <div class="detail_title">
-                <font size="7">{{article.title }}</font>
-                <br> {{article.created_at | date}}
-            </div>
-            {{ article.text | markdown_to_html | linebreaks }}
+    <div class="detail_main">
+        <div class="detail_title">
+            <font size="7">{{article.title }}</font>
+            <br> {{article.created_at | date}}
         </div>
-        <!--{%include "./sidebar.html"%}-->
+        {{ article.text | markdown_to_html | linebreaks }}
+    </div>
+    <!--{%include "./sidebar.html"%}-->
 
     <!--</div>-->
 </div>
 
-<div class="detail_end">
-    <a href="{%url 'contents:main' %}">戻る</a>
-    {% if perms.auth.add_user %}
-    <a href="{%url 'contents:update'　article.pk%}">編集</a>
-    <a href="{% url 'contents:delete' article.pk %}">削除</a>
-    {% endif %}
+
+<div>
+    <a onclick="$('.js_open_login').click()" href="javascript: void(0)" style="">
+        <div class="text">ログイン</div>
+    </a>
 </div>
 
+<div data-is="my-login" class="my-login" if="true">
+    <div class="js_open_login"></div>
+    <div class="wrap js_my_login" style="bottom: -360px; position:fixed;">
+        <div>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            
+        </div>
+</div>
 
-<footer>
-        <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>
-        <a href="#">トップへ</a>
-    </footer>
+        <div class="detail_end">
+            <a href="{%url 'contents:main' %}">戻る</a>
+            {% if perms.auth.add_user %}
+            <a href="{%url 'contents:update'　article.pk%}">編集</a>
+            <a href="{% url 'contents:delete' article.pk %}">削除</a>
+            {% endif %}
+        </div>
 
 
 
-{%endblock%}
+        <footer>
+            <p>Copyright © <span>ただのブログ </span>All Rights Reserved.</p>
+            <a href="#">トップへ</a>
+        </footer>
 
+
+
+        {%endblock%}

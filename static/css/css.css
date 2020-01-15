@@ -2,7 +2,8 @@
 
 
 body{
-ffont-family: 'Lato';
+font-family: 'Arial',YuGothic,'Yu Gothic','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','メイリオ', Meiryo,'ＭＳ ゴシック',sans-serif;
+
 background:#f0ebeb;
 
 }
@@ -78,36 +79,77 @@ color:#000000;
 
 }
 
+
+@media (min-width:1000px){
 #main_wrap{
 position:relative;
-bborder: solid 3px #006400;
 height:100%;
 display:block;
+width: 1170px;
+padding-right: 15px;
+padding-left: 15px;
+margin-right: auto;
+margin-left: auto;
 
+}    
+}
+
+@media (max-width:782px){
+    #main_wrap{
+    position:relative;
+    height:100%;
+    display:block;
+    }
 }
 
 
-
-
-#main{
-/* border: solid 3px #000000; */
+/* #main{
 position:relative;
 width:60%;
-margin:20px;
+margin:20px 0px 20px 20px;
+margin: 20px 20px 20px 0px;
 float:left;
  background-color:white;
+padding:20px;
+} */
 
+@media(min-width:1000px){
+    #main{
+        position:relative;
+        width:60%;
+   
+        margin: 20px 20px 20px 20px;
+        float:left;
+         background-color:white;
+        padding:20px;
+        box-shadow: 0 0 1px #dddddd;
+        }
 }
+
+@media(max-width:375px){
+    #main{
+        position:relative;
+        width:100%;
+
+        margin: 20px 20px 20px 20px;
+        float:left;
+         background-color:white;
+        padding:20px;
+        }
+}
+
+
 
 .article{
   background: #fffcf4;
 position:relative;
 display:block;
   /* box-shadow :0px 0px 5px silver;5px=影の広がり具合 */
-border: solid 5px #ff8c00;
+/* border: solid 5px #ff8c00; */
 border-top:solid 2px #343a40;
 padding:10px;
 margin:20px 20px 20px 0px;
+
 display:flex;
 
   width:100%;
@@ -125,13 +167,26 @@ float: left;
 box-sizing: border-box;
 margin:0 1px 0 0;
 border: 2px solid blue;
+max-height:200px;
+overflow: hidden;	/*拡大時にはみ出た部分を隠す*/
 }
 
 img.title_img{
 width:100%;
 height:auto;
+max-height:200px;
 
+display: block;
+	transition-duration: 0.3s;	/*変化に掛かる時間*/
     }
+
+.article_img img:hover {
+	transform: scale(1.1);	/*画像の拡大率*/
+	transition-duration: 0.3s;	/*変化に掛かる時間*/
+opacity: 0.7;
+}
+
+
 
 .article_main{
 position:relative;
@@ -139,7 +194,8 @@ float:right;
 width:69%;
 height:200px;
  /*box-sizing: border-box;*/
-
+ box-shadow: 0 2px 5px rgba(0, 0, 0, .09);
+ 
 }
 
 .article_title{
@@ -239,18 +295,58 @@ color:#696969;
 }
 
 
-#sidebar{
+/* #sidebar{ */
 /* border: solid 3px #ff0000; */
-display: block;
+/* display: block; */
 /*position:absolute;
 right:0;
 top:0;*/
-width:20%;
-margin: 20px 20px 20px 100px;
+/* width:25%;
+margin: 20px 20px 20px 20px;
 background-color:white;
-float:left
+float:left;
+box-shadow: 0 0 1px #dddddd;
+} */
 
+@media (min-width:1000px){
+    #sidebar{
+        /* border: solid 3px #ff0000; */
+        display: block;
+        /*position:absolute;
+        right:0;
+        top:0;*/
+        width:25%;
+        margin: 20px 20px 20px 20px;
+        padding:20px;
+        background-color:red;
+        float:left;
+        box-shadow: 0 0 1px #dddddd;
+        }
 }
+
+/* @media (max-width:783px){
+    #sidebar{
+        background-color: #006400;
+    }} */
+
+@media (max-width:782px){
+    #sidebar{
+        /* border: solid 3px #ff0000; */
+        display: block;
+        /*position:absolute;
+        right:0;
+        top:0;*/
+        width:100%;
+        margin: 20px 20px 20px 20px;
+        padding:20px;
+        background-color:blue;
+        float:left;
+        box-shadow: 0 0 1px #dddddd;
+        box-sizing: border-box;
+        
+    }
+}
+
 
 
 
@@ -407,6 +503,9 @@ color:black;
 
 
 /* 詳細画面*/
+
+
+
 .detail_wrap{
 width: 90%;
 margin: 32px auto 0;
@@ -416,13 +515,12 @@ position:relative;
 }
 
 
-/*
-.detail_main_wrap{
-position:relative;
-display:flex;
+ol.breadcrumb{
 background-color: white;
+margin:20px;
+box-shadow: 0 0 1px #dddddd;
 }
-*/
+
 
 .detail_main{
 width:70%;
@@ -430,6 +528,7 @@ background-color: white;
 margin:20px;
 position:relative;
 padding:20px;
+box-shadow: 0 0 1px #dddddd;
 }
 
 .detail_title{
@@ -448,6 +547,6 @@ background-color: #e6e6fa;
 width: 80%;
 margin: 32px auto 0;
 padding: 16px;
-background-color: #e6e6fa;
-border: solid 1px #c0c0c0;
+background-color: white;
+box-shadow: 0 0 1px #dddddd;
 }

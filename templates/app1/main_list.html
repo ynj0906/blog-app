@@ -5,6 +5,8 @@
 {% load side_archive_category %}
 {% load count_montharchive %}
 
+{% load account %}
+{% load socialaccount %}
 
 {% block content %}
 <div id="container">
@@ -16,11 +18,18 @@
             <li><a href="{%url 'contents:logout'%}">ログアウト</a></li>
             <li><a href="{% url 'contents:create' %}">新規作成</a></li>
             {%else%}
-            <li><a href="{%url 'contents:login'%}">ログイン</a></li>
+            <li><a href="{%url 'contents:login'%}">普通のログイン</a></li>
+            <li>
+                {% get_providers as socialaccount_providers %}
+                {% for provider in socialaccount_providers %}
+                <a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }}"
+                    href="{% provider_login_url provider.id process='login' %}">{{ provider.name }}</a>
+                {% endfor %}
+            </li>
             {%endif%}
             <li>
                 <form id="form1" action="">
-                    <input id="sbox" name="keyword" type="text" placeholder="キーワードを入力"/>
+                    <input id="sbox" name="keyword" type="text" placeholder="キーワードを入力" />
                     <!--<input id="a" name="検索" , type="submit"/>-->
                     <!--<input id="sbtn" type="submit" value="検索"/>-->
                 </form>
@@ -52,9 +61,8 @@
 
     </header>
 
+  
     <div id="main_wrap">
-
-
         <div id="main">
             {% if search_keyword %}
             <div id="search_result">
@@ -69,10 +77,11 @@
                 <div class="article_img">
                     <!--投稿画像があったら表示、なかったら固定画像-->
                     {% if detail.photo %}
-                    <img class="title_img" src="{{ detail.photo.url }}"/>
+                    <img class="title_img" src="{{ detail.photo.url }}" />
                     {% else %}
-                    <img class="title_img" src="{% static 'photo/gazo2.png' %}"/>
+                    <img class="title_img" src="{% static 'photo/gazo2.png' %}" />
                     {%endif%}
+                    <span style="position:absolute;right:0;top:0;background:#63f2a6;color:#444444;">ああ</span>
                 </div>
 
                 <div class="article_main">
@@ -91,7 +100,7 @@
                     <div class="article_end">
                         {% for tag in detail.tag.all %}
                         <span class="tag ">
-                        <a href="{% url 'contents:tagview' tag.pk %}">{{ tag}}</a>
+                            <a href="{% url 'contents:tagview' tag.pk %}">{{ tag}}</a>
                         </span>
                         {% endfor %}
                         <span class="published entry-meta_items">{{detail.created_at |date}}</span>
@@ -100,10 +109,10 @@
             </div>
 
             {%endfor%}
-             <div class="page">
-            <!--ページネーション部分-->
-            {% include "./pagination.html" %}
-        </div>
+            <div class="page">
+                <!--ページネーション部分-->
+                {% include "./pagination.html" %}
+            </div>
 
         </div>
 
@@ -111,8 +120,10 @@
     </div>
 
 
+
     <footer>
-        <p>Copyright © <span>そんじょそこらにあるブログ </span>All Rights Reserved.</p>
+
+        <p>Copyright © {% now "Y" %} <span>そんじょそこらにあるブログ </span>All Rights Reserved.</p>
         <a href="#">トップへ</a>
     </footer>
 

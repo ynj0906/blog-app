@@ -26,6 +26,7 @@ urlpatterns = [
     path('contents/', include('contents.urls')),
     path('contents/', include('django.contrib.auth.urls')),
     path('markdownx/', include('markdownx.urls')),
+    path('accounts/',include('allauth.urls')),
 
 ]
 
@@ -34,9 +35,9 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 #追加
-# if settings.DEBUG:
-#     import debug_toolbar
-#
-#     urlpatterns +=[
-#         path('__debug__/', include(debug_toolbar.urls))
-#     ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

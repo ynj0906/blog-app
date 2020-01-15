@@ -4,7 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.response import TemplateResponse
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
+
+from django.urls import reverse
 from django.urls import reverse_lazy
+from django.shortcuts import redirect, resolve_url
+
 from .models import Article, Tag
 from .forms import ArticleForm, TagForm,LoginForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,25 +17,25 @@ from django.views.generic.dates import ArchiveIndexView,MonthArchiveView
 
 
 # Create your views here.
-class Hello(View):
 
+# 確認用
+class Hello(View):
     def get(self, request):
         context = {"message": "helloWorld"}
         return TemplateResponse(request, "./hello.html", context)
 
-
 hello = Hello.as_view()
 
-
+# ログイン
 class Login(LoginView):
     """ログインページ"""
     form_class = LoginForm
     success_url = reverse_lazy("contents:main")
     template_name = 'app1/login.html'
 
-
 login = Login.as_view()
 
+# ページネーション
 def paginate_queryset(request, queryset, count):
     """Pageオブジェクトを返す。
 
@@ -57,16 +61,13 @@ def paginate_queryset(request, queryset, count):
         page_obj = paginator.page(paginator.num_pages)
     return page_obj
 
-
+# メインメニュー
 class Main(ListView, PermissionRequiredMixin):
     model = Article
     queryset=Article.objects.all().order_by("-created_at")#表示を新しい順に
     template_name = "app1/main_list.html"
     permission_required = ("contents.view_article", "contents.view_tag")
-    print("実行されてる～？")
-    # paginate_by = 3
-
-
+    
     def get_context_data(self,**kwargs):#検索時のメソッド
         self.paginate_by = 1
         context = super(ListView, self).get_context_data(**kwargs)
@@ -75,7 +76,6 @@ class Main(ListView, PermissionRequiredMixin):
             search_keyword = self.request.GET.get('keyword')
             context['search_keyword'] = search_keyword
             article_list = Article.objects.filter(text__contains=search_keyword).order_by("-created_at")
-            # paginator = Paginator(article_list, 6)
             page_obj = paginate_queryset(self.request, article_list, 3)#別に登録したpaginate_queryset関数を使ってる
             context["article_list"] = page_obj.object_list  # フィルタした結果を辞書型としてcontextに追加
             context["page_obj"] = page_obj
@@ -84,7 +84,6 @@ class Main(ListView, PermissionRequiredMixin):
             self.paginate_by = 6
             context = super(ListView, self).get_context_data(**kwargs)
             return context
-
             # return Article.objects.all()#パラメータがなければ全件取得
 
     #
@@ -102,6 +101,7 @@ class Main(ListView, PermissionRequiredMixin):
 main = Main.as_view()
 
 
+# 記事新規作成
 class Create(CreateView,PermissionRequiredMixin):
     model = Article
     form_class = ArticleForm
@@ -110,31 +110,31 @@ class Create(CreateView,PermissionRequiredMixin):
     raise_exception = True
     success_url = reverse_lazy("contents:main")
 
-
 create = Create.as_view()
 
-
+# 記事詳細
 class Detail(DetailView,PermissionRequiredMixin):
     model = Article
     template_name = "app1/detail_list.html"
     permission_required = ("contents.add_article", "contents.add_tag")
-
-
-
+    
 detail = Detail.as_view()
 
 
+# 記事更新
 class Update(UpdateView,PermissionRequiredMixin):
     model = Article
     template_name = "app1/create_list.html"
     form_class = ArticleForm
     permission_required =("contents.add_article", "contents.add_tag")
-    success_url = reverse_lazy('contents:main')
-
+    
+    #
+    def get_success_url(self):
+        return reverse('contents:detail', kwargs={'pk': self.object.pk})
 
 update = Update.as_view()
 
-
+# 記事削除
 class Delete(DeleteView,PermissionRequiredMixin):
     model = Article
     template_name = "app1/delete_list.html"
@@ -143,30 +143,37 @@ class Delete(DeleteView,PermissionRequiredMixin):
     success_url = reverse_lazy('contents:main')
 
 
+# タグ作成
 class TagCreate(CreateView, PermissionRequiredMixin):
     model = Article
     form_class = TagForm
     template_name = "app1/tag_form.html"
     permission_required = ("contents.add_article", "contents.add_tag")
-    success_url = reverse_lazy('contents:main')
-
+    # success_url = reverse_lazy('contents:update/<int(pk)>')
+    
+    #失敗作、このままだとタグのpkが取得される、detailのpkをとってきたい。
+    def get_success_url(self,Detail):
+        context = super().get_context_data(**kwargs)
+        return reverse('contents:detail', kwargs={'pk': Detail.object.pk})
 
 tagcreate = TagCreate.as_view()
 
-
+# タグ表示
 class TagView(ListView,PermissionRequiredMixin):
     paginate_by = 3
     model = Article
     form_class = TagForm
+    
     permission_required = ("contents.add_article", "contents.add_tag")
     template_name = "app1/tag_view.html"
-
+   
     def get_queryset(self):
         queryset = Article.objects.all().filter(tag__pk=self.kwargs['pk'])
         return queryset
+    
 tagview = TagView.as_view()
 
-
+# 月別アーカイブ
 class ArticleMonthArchive(MonthArchiveView):
     model = Article
     template_name = "app1/article_archive.html"

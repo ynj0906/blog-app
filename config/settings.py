@@ -44,6 +44,12 @@ INSTALLED_APPS = [
     'contents.apps.ContentsConfig',#追加
     'django.forms',#追加
     'markdownx',#追加
+    'django.contrib.sites',#django-allauth関係
+    'allauth',#django-allauth関係
+    'allauth.account',#django-allauth関係
+    'allauth.socialaccount',#django-allauth関係
+    'allauth.socialaccount.providers.github'#django-allauth関係
+    
 
 ]
 
@@ -56,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+INTERNAL_IPS = ['127.0.0.1:8000']
 
 ROOT_URLCONF = 'config.urls'
 
@@ -151,30 +159,21 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = '/var/www/{}/static'.format(PROJECT_NAME)
 
 
-#ログイン/ログアウト時のリダイレクト用に追加
-LOGIN_REDIRECT_URL = "/contents/main"
-LOGOUT_REDIRECT_URL = "/contents/main"
-
 #画像のアップロード用に追加
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/www/{}/media'.format(PROJECT_NAME)
 
-#追加
-# if DEBUG:
-#     def show_toolbar(request):
-#         return True
-# INSTALLED_APPS += (
-#     'debug_toolbar',
-# )
-# MIDDLEWARE += (
-#     'debug_toolbar.middleware.DebugToolbarMiddleware',)
-# DEBUG_TOOLBAR_CONFIG = {
-#     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
-# }
-
-FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',
     'markdown.extensions.toc',
 ]
+
+#ログイン/ログアウト時のリダイレクト用に追加
+LOGIN_REDIRECT_URL = "/contents/main"
+LOGOUT_REDIRECT_URL = "/contents/main"
+
+#django-allauthの為に追加
+ACCOUNT_LOGOUT_REDIRECT_URL="/accounts/login/"
+# LOGIN_REDIRECT_URL = "/contents/main"
+SITE_ID=1
