@@ -178,6 +178,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL="/accounts/login/"
 # LOGIN_REDIRECT_URL = "/contents/main"
 SITE_ID=1
 
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 ###########
 # Logging #
