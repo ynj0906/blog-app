@@ -13,24 +13,16 @@
 
     <header>
         <div id="header_title">
-            <li>タイトルヘッダ</li>
-            {% if perms.auth.add_user %}
-            <li><a href="{%url 'contents:logout'%}">ログアウト</a></li>
-            <li><a href="{% url 'contents:create' %}">新規作成</a></li>
-            {%else%}
-            <li><a href="{%url 'contents:login'%}">普通のログイン</a></li>
-            <li>
-                {% get_providers as socialaccount_providers %}
-                {% for provider in socialaccount_providers %}
-                <a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }}"
-                    href="{% provider_login_url provider.id process='login' %}">{{ provider.name }}</a>
-                {% endfor %}
-            </li>
-            {%endif%}
+            <!-- <li class="skill-icon fa fa-code" style="border:4px solid;border-radius:50%;"> </li
+                class="skill-icon fa fa-code"> -->
+            <li class="fa fa-bars"
+                onclick="if($('#header_menu').hasClass('active')){$('#header_menu').removeClass('active');}else{$('#header_menu').addClass('active');};"
+                style=" cursor: pointer;"></li>
+
             <li>
                 <form id="form1" action="">
                     <input id="sbox" name="keyword" type="text" placeholder="キーワードを入力" />
-                    <!--<input id="a" name="検索" , type="submit"/>-->
+                    <input id="a" name="検索" , type="submit" />
                     <!--<input id="sbtn" type="submit" value="検索"/>-->
                 </form>
             </li>
@@ -39,6 +31,32 @@
             {%else%}
             <li>ログインしてない侍</li>
             {%endif%}
+
+
+        </div>
+        <div id="header_menu" class="">
+            <div class="close"></div>
+            <div class="wrap">
+                <li> 記事一覧 </li>
+                <li><a href="{% url 'contents:tagall'  %}"> タグ一覧 </a></li>
+
+
+                <li>タイトルヘッダ</li>
+                {% if perms.auth.add_user %}
+                <li><a href="{%url 'contents:logout'%}">ログアウト</a></li>
+                <li><a href="{% url 'contents:create' %}">新規作成</a></li>
+                {%else%}
+                <li><a href="{%url 'contents:login'%}">普通のログイン</a></li>
+                <li>
+                    {% get_providers as socialaccount_providers %}
+                    {% for provider in socialaccount_providers %}
+                    <a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }}"
+                        href="{% provider_login_url provider.id process='login' %}">{{ provider.name }}</a>
+                    {% endfor %}
+                </li>
+                {%endif%}
+            </div>
+
 
 
         </div>
@@ -61,15 +79,23 @@
 
     </header>
 
-  
     <div id="main_wrap">
         <div id="main">
             {% if search_keyword %}
-            <div id="search_result">
-                検索結果：{{ search_keyword }}
+            <div class="result">
+                <div id="search_result">
+                    検索結果：{{ search_keyword }}
+                </div>
             </div>
-            {% else %}
+            {% elif propertyinfo  %}
+            <div class="result">
+                <div id="tag_result">
+                    選択タグ : {{propertyinfo}}
+                </div>
+            </div>
+            {%else%}
             {% endif %}
+
 
             <!--記事本文-->
             {% for detail in article_list %}
@@ -113,21 +139,21 @@
                 <!--ページネーション部分-->
                 {% include "./pagination.html" %}
             </div>
-
         </div>
 
+        <!-- サイドバー部分 -->
         {%include "./sidebar.html"%}
+
+
+
     </div>
-
-
-
     <footer>
 
         <p>Copyright © {% now "Y" %} <span>そんじょそこらにあるブログ </span>All Rights Reserved.</p>
         <a href="#">トップへ</a>
     </footer>
 
-</div>
 
 
-{% endblock %}
+
+    {% endblock %}

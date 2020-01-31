@@ -1,0 +1,9 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{%block content%}
+{%for i in tags%}
+<li>{{i}}<a href="{% url 'contents:tagdelete' i.pk %}">削除</a> </li>
+{%endfor%}
+
+{%endblock%}

@@ -13,10 +13,12 @@ import pytz
 def common(request):
     # melb = pytz.timezone('Asia/Tokyo')
     tag = Tag.objects.annotate(num_tags=Count('article'))
+    # tag_num= Tag.objects.all().filter(pk=pk)
+    # Article.objects.all().filter(tag__pk=self.kwargs['pk'])
     # dates = Article.objects.annotate(num_date=TruncDate('created_at'))
 
     context = {
         "tags":tag,
-        # "datess":dates,
+        # "tag_nums":tag_num,
     }
     return context

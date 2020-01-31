@@ -2,59 +2,15 @@
 {% load static %}
 {% load markdown %}
 {% load remove_white_space %}
+{% load side_archive_category %}
+{% load count_montharchive %}
 
+{% load account %}
+{% load socialaccount %}
+
+<div style="background-color:white;border-left: solid 5px green;margin:20px;width:69%;font-size:20px;">
+    選択タグ ： {{propertyinfo}}
+</div>
 {% block content %}
-<!--<div id="container">-->
-    <!--{% for detail in article_list %}-->
-    <!--<div class="lis">-->
-        <!--<ul><a href="{%url 'contents:detail' detail.pk%}">{{detail.created_at}}</a></ul>-->
-        <!--<ul>{{detail.title}}</ul>-->
-    <!--</div>-->
-    <!--{% endfor %}-->
-<!--</div>-->
-<!--<div>        &lt;!&ndash;ページネーション部分&ndash;&gt;-->
-            <!--{% include "./pagination.html" %}-->
-<!--</div>-->
-
-            {% for detail in article_list %}
-            <div class="article">
-                <div class="article_img">
-                    <!--投稿画像があったら表示、なかったら固定画像-->
-                    {% if detail.photo %}
-                    <img class="title_img" src="{{ detail.photo.url }}"/>
-                    {% else %}
-                    <img class="title_img" src="{% static 'photo/gazo2.png' %}"/>
-                    {%endif%}
-                </div>
-
-                <div class="article_main">
-                    <div class="article_title">
-                        <a href="{% url 'contents:detail' detail.pk %}">
-                            {{ detail.title | linebreaks }}
-                        </a>
-                    </div>
-
-                    <div class="article_text">
-                        {% spaceless %}
-                        {{ detail.text | markdown_to_html | striptags | remove_white_space }}
-                        {% endspaceless %}
-                    </div>
-
-                    <div class="article_end">
-                        {% for tag in detail.tag.all %}
-                        <span class="tag ">
-                        <a href="{% url 'contents:tagview' tag.pk %}">{{ tag}}</a>
-                        </span>
-                        {% endfor %}
-                        <span class="published entry-meta_items">{{detail.created_at |date}}</span>
-                    </div>
-                </div>
-                       </div>
-            {%endfor%}
-            <!--ページネーション部分-->
-            {% include "./pagination.html" %}
-        </div>
-
-    </div>
-
-    {%endblock%}
+{%include "./main_list.html"%}
+{%endblock%}

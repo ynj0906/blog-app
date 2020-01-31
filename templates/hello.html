@@ -1,9 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
-
-
 {% block content %}
 
-{{message}}
+<button id="button1" type="button">GETボタン</button>
+        <div id="resultGET"></div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+ $('#button1').on('click', function(){
+                $('#resultGET').text('通信中...');
+                // Ajax通信を開始
+                $.ajax({
+                    url: "{% url 'contents:exec' object.pk %}",
+                    method: "GET",
+                    // プレーンテキストを受信（他にはhtml、xml、script、json、jsonp等）
+                    dataType: 'text',
+                    // リクエストパラメータ「?param1=いろはに&param2=ほへと&param3=ちりぬるを」
+                    data: {
+                        param1: 'いろはに',
+                        param2: 'ほへと',
+                        param3: 'ちりぬるを '
+                    },
+                    timeout: 5000,
+                })
+            });
+</script>
 
 {% endblock %}

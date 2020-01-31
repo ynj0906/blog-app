@@ -18,17 +18,13 @@
         </div>
         {{ article.text | markdown_to_html | linebreaks }}
     </div>
-    <!--{%include "./sidebar.html"%}-->
+    {%include "./sidebar.html"%}-->
 
-    <!--</div>-->
+    <!--</div>
 </div>
 
 
-<div>
-    <a onclick="$('.js_open_login').click()" href="javascript: void(0)" style="">
-        <div class="text">ログイン</div>
-    </a>
-</div>
+
 
 <div data-is="my-login" class="my-login" if="true">
     <div class="js_open_login"></div>

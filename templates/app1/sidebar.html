@@ -7,6 +7,7 @@
         <ul>
             {% for tag in tags.all %}
             <a href="{%url 'contents:tagview' tag.pk%}">
+                <!-- context_proceccer.pyから引っ張ってきてる -->
                 <li> {{ tag.name }}({{tag.num_tags}})</li>
             </a>
             {%endfor%}
@@ -14,7 +15,6 @@
     </div>
     <div class="side_datecategory">
         月別アーカイブ
-
         {% render_month_links %}
     </div>
 </div>

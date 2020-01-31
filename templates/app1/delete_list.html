@@ -3,9 +3,13 @@
 {% block content %}
 
 <div>
-
 <form method="post">
+    {%if article%}
     <button class="btn btn-danger">{{article}}を削除する</button>
+    {%elif tag%}
+    <button class="btn btn-danger">{{tag}}を削除する?</button>
+    {%endif%}
+    
     {% csrf_token %}
 </form>
 </div>

@@ -79,6 +79,21 @@ color:#000000;
 
 }
 
+#header_menu{
+display:none;
+}
+#header_menu.active{
+display:block;
+position: fixed;
+top: 40px;
+bottom: 0;
+width: 200px;
+z-index: 115;
+box-shadow: inset 6px 0px 19px 0px rgba(0,0,0,0.3);
+background-image: linear-gradient(-45deg, #111 25%, #1b212a 0, #1b212a 50%, #111 0, #111 75%, #1b212a 0, #1b212a);
+background-size: 2px 2px;
+
+}
 
 @media (min-width:1000px){
 #main_wrap{
@@ -99,7 +114,14 @@ margin-left: auto;
     position:relative;
     height:100%;
     display:block;
+    margin:20px;
     }
+}
+
+
+.result{
+    text-align: center;
+
 }
 
 
@@ -126,12 +148,12 @@ padding:20px;
         }
 }
 
-@media(max-width:375px){
+@media(max-width:782px){
     #main{
         position:relative;
         width:100%;
 
-        margin: 20px 20px 20px 20px;
+        margin: 20px 20px 20px 0px;
         float:left;
          background-color:white;
         padding:20px;
@@ -144,7 +166,7 @@ padding:20px;
   background: #fffcf4;
 position:relative;
 display:block;
-  /* box-shadow :0px 0px 5px silver;5px=影の広がり具合 */
+  box-shadow :0px 0px 5px silver;/*5px=影の広がり具合*/
 /* border: solid 5px #ff8c00; */
 border-top:solid 2px #343a40;
 padding:10px;
@@ -166,7 +188,7 @@ width:30%;
 float: left;
 box-sizing: border-box;
 margin:0 1px 0 0;
-border: 2px solid blue;
+/* border: 2px solid blue; */
 max-height:200px;
 overflow: hidden;	/*拡大時にはみ出た部分を隠す*/
 }
@@ -194,7 +216,7 @@ float:right;
 width:69%;
 height:200px;
  /*box-sizing: border-box;*/
- box-shadow: 0 2px 5px rgba(0, 0, 0, .09);
+ /* box-shadow: 0 2px 5px rgba(0, 0, 0, .09); */
  
 }
 
@@ -318,7 +340,7 @@ box-shadow: 0 0 1px #dddddd;
         width:25%;
         margin: 20px 20px 20px 20px;
         padding:20px;
-        background-color:red;
+        background-color:white;
         float:left;
         box-shadow: 0 0 1px #dddddd;
         }
@@ -337,12 +359,13 @@ box-shadow: 0 0 1px #dddddd;
         right:0;
         top:0;*/
         width:100%;
-        margin: 20px 20px 20px 20px;
+        margin: 20px 20px 20px 0px;
         padding:20px;
-        background-color:blue;
+        background-color:white;
         float:left;
         box-shadow: 0 0 1px #dddddd;
         box-sizing: border-box;
+        border:solid 1px black;
         
     }
 }
@@ -359,15 +382,15 @@ margin-bottom: -1px;
 /*ページネーション部分 */
 
 .page{
-border:solid 1px #000;
+/* border:solid 1px #000; */
 clear:both;
 }
 
 .pagination{
 padding: 20px;
 margin:auto;
-width: 250px;
-
+display: flex;
+justify-content: center;
 }
 
 .page-item.active .page-link{
