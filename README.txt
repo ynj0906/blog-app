@@ -3,7 +3,7 @@
 #環境
 ・python
 ・Django
-・VPS
+・VPS(CentOs7)
 
 # 実装されてる機能
 ・ページネーション
